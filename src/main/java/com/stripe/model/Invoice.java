@@ -239,6 +239,15 @@ public class Invoice extends ApiResource implements HasId, MetadataStore<Invoice
   Discount discount;
 
   /**
+   * The discounts applied to the invoice. Line item discounts are applied before invoice discounts.
+   * Use {@code expand[]=discounts} to expand each discount.
+   */
+  @SerializedName("discounts")
+  @Getter(lombok.AccessLevel.NONE)
+  @Setter(lombok.AccessLevel.NONE)
+  ExpandableField<Discount> discounts;
+
+  /**
    * The date on which payment for this invoice is due. This value will be {@code null} for invoices
    * where {@code collection_method=charge_automatically}.
    */
@@ -418,6 +427,10 @@ public class Invoice extends ApiResource implements HasId, MetadataStore<Invoice
   @SerializedName("total")
   Long total;
 
+  /** The aggregate amounts calculated per discount across all line items. */
+  @SerializedName("total_discount_amounts")
+  List<DiscountAmount> totalDiscountAmounts;
+
   /** The aggregate amounts calculated per tax rate for all line items. */
   @SerializedName("total_tax_amounts")
   List<Invoice.TaxAmount> totalTaxAmounts;
@@ -511,6 +524,24 @@ public class Invoice extends ApiResource implements HasId, MetadataStore<Invoice
   public void setDefaultSourceObject(PaymentSource expandableObject) {
     this.defaultSource =
         new ExpandableField<PaymentSource>(expandableObject.getId(), expandableObject);
+  }
+
+  /** Get ID of expandable {@code discounts} object. */
+  public String getDiscounts() {
+    return (this.discounts != null) ? this.discounts.getId() : null;
+  }
+
+  public void setDiscounts(String id) {
+    this.discounts = ApiResource.setExpandableFieldId(id, this.discounts);
+  }
+
+  /** Get expanded {@code discounts}. */
+  public Discount getDiscountsObject() {
+    return (this.discounts != null) ? this.discounts.getExpanded() : null;
+  }
+
+  public void setDiscountsObject(Discount expandableObject) {
+    this.discounts = new ExpandableField<Discount>(expandableObject.getId(), expandableObject);
   }
 
   /** Get ID of expandable {@code paymentIntent} object. */
