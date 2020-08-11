@@ -52,11 +52,15 @@ public class CreditNote extends ApiResource implements HasId, MetadataStore<Cred
   ExpandableField<CustomerBalanceTransaction> customerBalanceTransaction;
 
   /**
-   * The integer amount in <strong>%s</strong> representing the amount of the discount that was
+   * The integer amount in <strong>%s</strong> representing the total amount of discount that was
    * credited.
    */
   @SerializedName("discount_amount")
   Long discountAmount;
+
+  /** The aggregate amounts calculated per discount for all line items. */
+  @SerializedName("discount_amounts")
+  List<DiscountAmount> discountAmounts;
 
   /** Unique identifier for the object. */
   @Getter(onMethod_ = {@Override})
@@ -138,7 +142,7 @@ public class CreditNote extends ApiResource implements HasId, MetadataStore<Cred
 
   /**
    * The integer amount in <strong>%s</strong> representing the amount of the credit note, excluding
-   * tax and discount.
+   * tax and invoice level discounts.
    */
   @SerializedName("subtotal")
   Long subtotal;
@@ -149,7 +153,7 @@ public class CreditNote extends ApiResource implements HasId, MetadataStore<Cred
 
   /**
    * The integer amount in <strong>%s</strong> representing the total amount of the credit note,
-   * including tax and discount.
+   * including tax and all discount.
    */
   @SerializedName("total")
   Long total;
@@ -536,6 +540,39 @@ public class CreditNote extends ApiResource implements HasId, MetadataStore<Cred
             String.format("/v1/credit_notes/%s/void", ApiResource.urlEncodeId(this.getId())));
     return ApiResource.request(
         ApiResource.RequestMethod.POST, url, params, CreditNote.class, options);
+  }
+
+  @Getter
+  @Setter
+  @EqualsAndHashCode(callSuper = false)
+  public static class DiscountAmount extends StripeObject {
+    /** The amount, in %s, of the discount. */
+    @SerializedName("amount")
+    Long amount;
+
+    /** The discount that was applied to get this discount amount. */
+    @SerializedName("discount")
+    @Getter(lombok.AccessLevel.NONE)
+    @Setter(lombok.AccessLevel.NONE)
+    ExpandableField<Discount> discount;
+
+    /** Get ID of expandable {@code discount} object. */
+    public String getDiscount() {
+      return (this.discount != null) ? this.discount.getId() : null;
+    }
+
+    public void setDiscount(String id) {
+      this.discount = ApiResource.setExpandableFieldId(id, this.discount);
+    }
+
+    /** Get expanded {@code discount}. */
+    public Discount getDiscountObject() {
+      return (this.discount != null) ? this.discount.getExpanded() : null;
+    }
+
+    public void setDiscountObject(Discount expandableObject) {
+      this.discount = new ExpandableField<Discount>(expandableObject.getId(), expandableObject);
+    }
   }
 
   @Getter

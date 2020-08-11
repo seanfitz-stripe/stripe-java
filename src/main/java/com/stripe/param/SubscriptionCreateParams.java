@@ -180,6 +180,13 @@ public class SubscriptionCreateParams extends ApiRequestParams {
   Object pendingInvoiceItemInterval;
 
   /**
+   * The API ID of a promotion code to apply to this subscription. A promotion code applied to a
+   * subscription will only affect invoices created for that particular subscription.
+   */
+  @SerializedName("promotion_code")
+  String promotionCode;
+
+  /**
    * This field has been renamed to {@code proration_behavior}. {@code prorate=true} can be replaced
    * with {@code proration_behavior=create_prorations} and {@code prorate=false} can be replaced
    * with {@code proration_behavior=none}.
@@ -267,6 +274,7 @@ public class SubscriptionCreateParams extends ApiRequestParams {
       Boolean offSession,
       PaymentBehavior paymentBehavior,
       Object pendingInvoiceItemInterval,
+      String promotionCode,
       Boolean prorate,
       ProrationBehavior prorationBehavior,
       Object taxPercent,
@@ -295,6 +303,7 @@ public class SubscriptionCreateParams extends ApiRequestParams {
     this.offSession = offSession;
     this.paymentBehavior = paymentBehavior;
     this.pendingInvoiceItemInterval = pendingInvoiceItemInterval;
+    this.promotionCode = promotionCode;
     this.prorate = prorate;
     this.prorationBehavior = prorationBehavior;
     this.taxPercent = taxPercent;
@@ -351,6 +360,8 @@ public class SubscriptionCreateParams extends ApiRequestParams {
 
     private Object pendingInvoiceItemInterval;
 
+    private String promotionCode;
+
     private Boolean prorate;
 
     private ProrationBehavior prorationBehavior;
@@ -389,6 +400,7 @@ public class SubscriptionCreateParams extends ApiRequestParams {
           this.offSession,
           this.paymentBehavior,
           this.pendingInvoiceItemInterval,
+          this.promotionCode,
           this.prorate,
           this.prorationBehavior,
           this.taxPercent,
@@ -777,6 +789,15 @@ public class SubscriptionCreateParams extends ApiRequestParams {
     }
 
     /**
+     * The API ID of a promotion code to apply to this subscription. A promotion code applied to a
+     * subscription will only affect invoices created for that particular subscription.
+     */
+    public Builder setPromotionCode(String promotionCode) {
+      this.promotionCode = promotionCode;
+      return this;
+    }
+
+    /**
      * This field has been renamed to {@code proration_behavior}. {@code prorate=true} can be
      * replaced with {@code proration_behavior=create_prorations} and {@code prorate=false} can be
      * replaced with {@code proration_behavior=none}.
@@ -899,7 +920,10 @@ public class SubscriptionCreateParams extends ApiRequestParams {
     @SerializedName("price")
     String price;
 
-    /** Data used to generate a new price object inline. */
+    /**
+     * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+     * inline.
+     */
     @SerializedName("price_data")
     PriceData priceData;
 
@@ -966,7 +990,10 @@ public class SubscriptionCreateParams extends ApiRequestParams {
         return this;
       }
 
-      /** Data used to generate a new price object inline. */
+      /**
+       * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+       * inline.
+       */
       public Builder setPriceData(PriceData priceData) {
         this.priceData = priceData;
         return this;
@@ -1008,7 +1035,8 @@ public class SubscriptionCreateParams extends ApiRequestParams {
 
       /**
        * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+       * one is required.
        */
       @SerializedName("unit_amount_decimal")
       BigDecimal unitAmountDecimal;
@@ -1103,7 +1131,8 @@ public class SubscriptionCreateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         public Builder setUnitAmountDecimal(BigDecimal unitAmountDecimal) {
           this.unitAmountDecimal = unitAmountDecimal;
@@ -1240,7 +1269,10 @@ public class SubscriptionCreateParams extends ApiRequestParams {
     @SerializedName("price")
     String price;
 
-    /** Data used to generate a new price object inline. */
+    /**
+     * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+     * inline.
+     */
     @SerializedName("price_data")
     PriceData priceData;
 
@@ -1395,7 +1427,10 @@ public class SubscriptionCreateParams extends ApiRequestParams {
         return this;
       }
 
-      /** Data used to generate a new price object inline. */
+      /**
+       * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+       * inline.
+       */
       public Builder setPriceData(PriceData priceData) {
         this.priceData = priceData;
         return this;
@@ -1563,7 +1598,8 @@ public class SubscriptionCreateParams extends ApiRequestParams {
 
       /**
        * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+       * one is required.
        */
       @SerializedName("unit_amount_decimal")
       BigDecimal unitAmountDecimal;
@@ -1669,7 +1705,8 @@ public class SubscriptionCreateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         public Builder setUnitAmountDecimal(BigDecimal unitAmountDecimal) {
           this.unitAmountDecimal = unitAmountDecimal;

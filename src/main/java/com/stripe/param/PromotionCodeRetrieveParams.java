@@ -9,7 +9,7 @@ import java.util.Map;
 import lombok.Getter;
 
 @Getter
-public class SubscriptionScheduleCancelParams extends ApiRequestParams {
+public class PromotionCodeRetrieveParams extends ApiRequestParams {
   /** Specifies which fields in the response should be expanded. */
   @SerializedName("expand")
   List<String> expand;
@@ -23,27 +23,9 @@ public class SubscriptionScheduleCancelParams extends ApiRequestParams {
   @SerializedName(ApiRequestParams.EXTRA_PARAMS_KEY)
   Map<String, Object> extraParams;
 
-  /**
-   * If the subscription schedule is {@code active}, indicates if a final invoice will be generated
-   * that contains any un-invoiced metered usage and new/pending proration invoice items. Defaults
-   * to {@code true}.
-   */
-  @SerializedName("invoice_now")
-  Boolean invoiceNow;
-
-  /**
-   * If the subscription schedule is {@code active}, indicates if the cancellation should be
-   * prorated. Defaults to {@code true}.
-   */
-  @SerializedName("prorate")
-  Boolean prorate;
-
-  private SubscriptionScheduleCancelParams(
-      List<String> expand, Map<String, Object> extraParams, Boolean invoiceNow, Boolean prorate) {
+  private PromotionCodeRetrieveParams(List<String> expand, Map<String, Object> extraParams) {
     this.expand = expand;
     this.extraParams = extraParams;
-    this.invoiceNow = invoiceNow;
-    this.prorate = prorate;
   }
 
   public static Builder builder() {
@@ -55,20 +37,15 @@ public class SubscriptionScheduleCancelParams extends ApiRequestParams {
 
     private Map<String, Object> extraParams;
 
-    private Boolean invoiceNow;
-
-    private Boolean prorate;
-
     /** Finalize and obtain parameter instance from this builder. */
-    public SubscriptionScheduleCancelParams build() {
-      return new SubscriptionScheduleCancelParams(
-          this.expand, this.extraParams, this.invoiceNow, this.prorate);
+    public PromotionCodeRetrieveParams build() {
+      return new PromotionCodeRetrieveParams(this.expand, this.extraParams);
     }
 
     /**
      * Add an element to `expand` list. A list is initialized for the first `add/addAll` call, and
      * subsequent calls adds additional elements to the original list. See {@link
-     * SubscriptionScheduleCancelParams#expand} for the field documentation.
+     * PromotionCodeRetrieveParams#expand} for the field documentation.
      */
     public Builder addExpand(String element) {
       if (this.expand == null) {
@@ -81,7 +58,7 @@ public class SubscriptionScheduleCancelParams extends ApiRequestParams {
     /**
      * Add all elements to `expand` list. A list is initialized for the first `add/addAll` call, and
      * subsequent calls adds additional elements to the original list. See {@link
-     * SubscriptionScheduleCancelParams#expand} for the field documentation.
+     * PromotionCodeRetrieveParams#expand} for the field documentation.
      */
     public Builder addAllExpand(List<String> elements) {
       if (this.expand == null) {
@@ -94,7 +71,7 @@ public class SubscriptionScheduleCancelParams extends ApiRequestParams {
     /**
      * Add a key/value pair to `extraParams` map. A map is initialized for the first `put/putAll`
      * call, and subsequent calls add additional key/value pairs to the original map. See {@link
-     * SubscriptionScheduleCancelParams#extraParams} for the field documentation.
+     * PromotionCodeRetrieveParams#extraParams} for the field documentation.
      */
     public Builder putExtraParam(String key, Object value) {
       if (this.extraParams == null) {
@@ -107,32 +84,13 @@ public class SubscriptionScheduleCancelParams extends ApiRequestParams {
     /**
      * Add all map key/value pairs to `extraParams` map. A map is initialized for the first
      * `put/putAll` call, and subsequent calls add additional key/value pairs to the original map.
-     * See {@link SubscriptionScheduleCancelParams#extraParams} for the field documentation.
+     * See {@link PromotionCodeRetrieveParams#extraParams} for the field documentation.
      */
     public Builder putAllExtraParam(Map<String, Object> map) {
       if (this.extraParams == null) {
         this.extraParams = new HashMap<>();
       }
       this.extraParams.putAll(map);
-      return this;
-    }
-
-    /**
-     * If the subscription schedule is {@code active}, indicates if a final invoice will be
-     * generated that contains any un-invoiced metered usage and new/pending proration invoice
-     * items. Defaults to {@code true}.
-     */
-    public Builder setInvoiceNow(Boolean invoiceNow) {
-      this.invoiceNow = invoiceNow;
-      return this;
-    }
-
-    /**
-     * If the subscription schedule is {@code active}, indicates if the cancellation should be
-     * prorated. Defaults to {@code true}.
-     */
-    public Builder setProrate(Boolean prorate) {
-      this.prorate = prorate;
       return this;
     }
   }

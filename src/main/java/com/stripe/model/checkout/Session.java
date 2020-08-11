@@ -31,6 +31,10 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 public class Session extends ApiResource implements HasId {
+  /** Enables user redeemable promotion codes. */
+  @SerializedName("allow_promotion_codes")
+  Boolean allowPromotionCodes;
+
   /** Total of all items before discounts or taxes are applied. */
   @SerializedName("amount_subtotal")
   Long amountSubtotal;
@@ -115,7 +119,7 @@ public class Session extends ApiResource implements HasId {
    * {@code en-GB}, {@code es}, {@code es-419}, {@code et}, {@code fi}, {@code fr}, {@code fr-CA},
    * {@code hu}, {@code id}, {@code it}, {@code ja}, {@code lt}, {@code lv}, {@code ms}, {@code mt},
    * {@code nb}, {@code nl}, {@code pl}, {@code pt}, {@code pt-BR}, {@code ro}, {@code ru}, {@code
-   * sk}, {@code sl}, {@code sv}, {@code tr}, or {@code zh}.
+   * sk}, {@code sl}, {@code sv}, {@code tr}, {@code zh}, {@code zh-HK}, or {@code zh-TW}.
    */
   @SerializedName("locale")
   String locale;

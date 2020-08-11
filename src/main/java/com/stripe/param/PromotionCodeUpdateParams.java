@@ -10,8 +10,11 @@ import java.util.Map;
 import lombok.Getter;
 
 @Getter
-public class PlanUpdateParams extends ApiRequestParams {
-  /** Whether the plan is currently available for new subscriptions. */
+public class PromotionCodeUpdateParams extends ApiRequestParams {
+  /**
+   * Whether the promotion code is currently active. A promotion code can only be reactivated when
+   * the coupon is still valid and the promotion code is otherwise redeemable.
+   */
   @SerializedName("active")
   Boolean active;
 
@@ -37,40 +40,12 @@ public class PlanUpdateParams extends ApiRequestParams {
   @SerializedName("metadata")
   Object metadata;
 
-  /** A brief description of the plan, hidden from customers. */
-  @SerializedName("nickname")
-  Object nickname;
-
-  /**
-   * The product the plan belongs to. This cannot be changed once it has been used in a subscription
-   * or subscription schedule.
-   */
-  @SerializedName("product")
-  Object product;
-
-  /**
-   * Default number of trial days when subscribing a customer to this plan using <a
-   * href="https://stripe.com/docs/api#create_subscription-trial_from_plan">{@code
-   * trial_from_plan=true}</a>.
-   */
-  @SerializedName("trial_period_days")
-  Long trialPeriodDays;
-
-  private PlanUpdateParams(
-      Boolean active,
-      List<String> expand,
-      Map<String, Object> extraParams,
-      Object metadata,
-      Object nickname,
-      Object product,
-      Long trialPeriodDays) {
+  private PromotionCodeUpdateParams(
+      Boolean active, List<String> expand, Map<String, Object> extraParams, Object metadata) {
     this.active = active;
     this.expand = expand;
     this.extraParams = extraParams;
     this.metadata = metadata;
-    this.nickname = nickname;
-    this.product = product;
-    this.trialPeriodDays = trialPeriodDays;
   }
 
   public static Builder builder() {
@@ -86,25 +61,16 @@ public class PlanUpdateParams extends ApiRequestParams {
 
     private Object metadata;
 
-    private Object nickname;
-
-    private Object product;
-
-    private Long trialPeriodDays;
-
     /** Finalize and obtain parameter instance from this builder. */
-    public PlanUpdateParams build() {
-      return new PlanUpdateParams(
-          this.active,
-          this.expand,
-          this.extraParams,
-          this.metadata,
-          this.nickname,
-          this.product,
-          this.trialPeriodDays);
+    public PromotionCodeUpdateParams build() {
+      return new PromotionCodeUpdateParams(
+          this.active, this.expand, this.extraParams, this.metadata);
     }
 
-    /** Whether the plan is currently available for new subscriptions. */
+    /**
+     * Whether the promotion code is currently active. A promotion code can only be reactivated when
+     * the coupon is still valid and the promotion code is otherwise redeemable.
+     */
     public Builder setActive(Boolean active) {
       this.active = active;
       return this;
@@ -113,7 +79,7 @@ public class PlanUpdateParams extends ApiRequestParams {
     /**
      * Add an element to `expand` list. A list is initialized for the first `add/addAll` call, and
      * subsequent calls adds additional elements to the original list. See {@link
-     * PlanUpdateParams#expand} for the field documentation.
+     * PromotionCodeUpdateParams#expand} for the field documentation.
      */
     public Builder addExpand(String element) {
       if (this.expand == null) {
@@ -126,7 +92,7 @@ public class PlanUpdateParams extends ApiRequestParams {
     /**
      * Add all elements to `expand` list. A list is initialized for the first `add/addAll` call, and
      * subsequent calls adds additional elements to the original list. See {@link
-     * PlanUpdateParams#expand} for the field documentation.
+     * PromotionCodeUpdateParams#expand} for the field documentation.
      */
     public Builder addAllExpand(List<String> elements) {
       if (this.expand == null) {
@@ -139,7 +105,7 @@ public class PlanUpdateParams extends ApiRequestParams {
     /**
      * Add a key/value pair to `extraParams` map. A map is initialized for the first `put/putAll`
      * call, and subsequent calls add additional key/value pairs to the original map. See {@link
-     * PlanUpdateParams#extraParams} for the field documentation.
+     * PromotionCodeUpdateParams#extraParams} for the field documentation.
      */
     public Builder putExtraParam(String key, Object value) {
       if (this.extraParams == null) {
@@ -152,7 +118,7 @@ public class PlanUpdateParams extends ApiRequestParams {
     /**
      * Add all map key/value pairs to `extraParams` map. A map is initialized for the first
      * `put/putAll` call, and subsequent calls add additional key/value pairs to the original map.
-     * See {@link PlanUpdateParams#extraParams} for the field documentation.
+     * See {@link PromotionCodeUpdateParams#extraParams} for the field documentation.
      */
     public Builder putAllExtraParam(Map<String, Object> map) {
       if (this.extraParams == null) {
@@ -165,7 +131,7 @@ public class PlanUpdateParams extends ApiRequestParams {
     /**
      * Add a key/value pair to `metadata` map. A map is initialized for the first `put/putAll` call,
      * and subsequent calls add additional key/value pairs to the original map. See {@link
-     * PlanUpdateParams#metadata} for the field documentation.
+     * PromotionCodeUpdateParams#metadata} for the field documentation.
      */
     @SuppressWarnings("unchecked")
     public Builder putMetadata(String key, String value) {
@@ -179,7 +145,7 @@ public class PlanUpdateParams extends ApiRequestParams {
     /**
      * Add all map key/value pairs to `metadata` map. A map is initialized for the first
      * `put/putAll` call, and subsequent calls add additional key/value pairs to the original map.
-     * See {@link PlanUpdateParams#metadata} for the field documentation.
+     * See {@link PromotionCodeUpdateParams#metadata} for the field documentation.
      */
     @SuppressWarnings("unchecked")
     public Builder putAllMetadata(Map<String, String> map) {
@@ -209,46 +175,6 @@ public class PlanUpdateParams extends ApiRequestParams {
      */
     public Builder setMetadata(Map<String, String> metadata) {
       this.metadata = metadata;
-      return this;
-    }
-
-    /** A brief description of the plan, hidden from customers. */
-    public Builder setNickname(String nickname) {
-      this.nickname = nickname;
-      return this;
-    }
-
-    /** A brief description of the plan, hidden from customers. */
-    public Builder setNickname(EmptyParam nickname) {
-      this.nickname = nickname;
-      return this;
-    }
-
-    /**
-     * The product the plan belongs to. This cannot be changed once it has been used in a
-     * subscription or subscription schedule.
-     */
-    public Builder setProduct(String product) {
-      this.product = product;
-      return this;
-    }
-
-    /**
-     * The product the plan belongs to. This cannot be changed once it has been used in a
-     * subscription or subscription schedule.
-     */
-    public Builder setProduct(EmptyParam product) {
-      this.product = product;
-      return this;
-    }
-
-    /**
-     * Default number of trial days when subscribing a customer to this plan using <a
-     * href="https://stripe.com/docs/api#create_subscription-trial_from_plan">{@code
-     * trial_from_plan=true}</a>.
-     */
-    public Builder setTrialPeriodDays(Long trialPeriodDays) {
-      this.trialPeriodDays = trialPeriodDays;
       return this;
     }
   }

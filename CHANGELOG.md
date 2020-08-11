@@ -1,5 +1,49 @@
 # Changelog
 
+## 19.40.0 - 2020-08-07
+* [#1078](https://github.com/stripe/stripe-java/pull/1078) Add support for Alipay on `PaymentMethod` and `PaymentIntent`
+
+## 19.39.0 - 2020-08-05
+* [#1077](https://github.com/stripe/stripe-java/pull/1077) Multiple API changes
+  * Add support for the `PromotionCode` resource and APIs
+  * Add support for `allow_promotion_codes` on Checkout `Session`
+  * Add support for `applies_to[products]` on `Coupon`
+  * Add support for `promotion_code` on `Customer` and `Subscription`
+  * Add support for `promotion_code` on `Discount`
+
+## 19.38.0 - 2020-08-04
+* [#1076](https://github.com/stripe/stripe-java/pull/1076) Multiple API changes
+  * Add `zh-HK` and `zh-TW` as `locale` on Checkout `Session`.
+  * Add `payment_method_details[card_present][receipt][account_type]` on `Charge`
+
+## 19.37.0 - 2020-07-31
+* [#1065](https://github.com/stripe/stripe-java/pull/1065) Support setting "proxy" per-request
+* [#1072](https://github.com/stripe/stripe-java/pull/1072) Socket timeout exceptions are now also subject to retries
+
+## 19.36.0 - 2020-07-29
+* [#1070](https://github.com/stripe/stripe-java/pull/1070) Multiple API changes
+  * Add support for `id`, `invoice` and `invoice_item` on `Discount`
+  * Add support for `discount_amounts` on `CreditNote`, `CreditNoteLineItem`, `InvoiceLineItem`
+  * Add support for `discounts` on `InvoiceItem`, `InvoiceLineItem` and `Invoice`
+  * Add support for `total_discount_amounts` on `Invoice`
+
+## 19.35.0 - 2020-07-24
+* [#1068](https://github.com/stripe/stripe-java/pull/1068) Add `capabilities[fpx_payments]` on `Account` create and update
+
+## 19.34.0 - 2020-07-22
+* [#1067](https://github.com/stripe/stripe-java/pull/1067) Add support for `cartes_bancaires_payments` as a `Capability`
+
+## 19.33.0 - 2020-07-20
+* [#1066](https://github.com/stripe/stripe-java/pull/1066) Add support for `capabilities` as a parameter on `Account` create and update
+
+## 19.32.0 - 2020-07-17
+* [#1062](https://github.com/stripe/stripe-java/pull/1062) Add support for `political_exposure` on `Person`
+
+## 19.31.0 - 2020-07-16
+* [#1061](https://github.com/stripe/stripe-java/pull/1061) Multiple API changes
+  * Add `deleted` on `LineItem`
+  * Add support for `account_onboarding` and `account_update` as `type` on `AccountLink`
+
 ## 19.30.0 - 2020-07-15
 * [#1058](https://github.com/stripe/stripe-java/pull/1058) Add support for `en-GB`, `fr-CA` and `id` as `locale` on Checkout `Session`
 

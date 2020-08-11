@@ -174,6 +174,13 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
   Object pendingInvoiceItemInterval;
 
   /**
+   * The promotion code to apply to this subscription. A promotion code applied to a subscription
+   * will only affect invoices created for that particular subscription.
+   */
+  @SerializedName("promotion_code")
+  Object promotionCode;
+
+  /**
    * This field has been renamed to {@code proration_behavior}. {@code prorate=true} can be replaced
    * with {@code proration_behavior=create_prorations} and {@code prorate=false} can be replaced
    * with {@code proration_behavior=none}.
@@ -269,6 +276,7 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
       Object pauseCollection,
       PaymentBehavior paymentBehavior,
       Object pendingInvoiceItemInterval,
+      Object promotionCode,
       Boolean prorate,
       ProrationBehavior prorationBehavior,
       Long prorationDate,
@@ -296,6 +304,7 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
     this.pauseCollection = pauseCollection;
     this.paymentBehavior = paymentBehavior;
     this.pendingInvoiceItemInterval = pendingInvoiceItemInterval;
+    this.promotionCode = promotionCode;
     this.prorate = prorate;
     this.prorationBehavior = prorationBehavior;
     this.prorationDate = prorationDate;
@@ -350,6 +359,8 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
 
     private Object pendingInvoiceItemInterval;
 
+    private Object promotionCode;
+
     private Boolean prorate;
 
     private ProrationBehavior prorationBehavior;
@@ -387,6 +398,7 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
           this.pauseCollection,
           this.paymentBehavior,
           this.pendingInvoiceItemInterval,
+          this.promotionCode,
           this.prorate,
           this.prorationBehavior,
           this.prorationDate,
@@ -814,6 +826,24 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
     }
 
     /**
+     * The promotion code to apply to this subscription. A promotion code applied to a subscription
+     * will only affect invoices created for that particular subscription.
+     */
+    public Builder setPromotionCode(String promotionCode) {
+      this.promotionCode = promotionCode;
+      return this;
+    }
+
+    /**
+     * The promotion code to apply to this subscription. A promotion code applied to a subscription
+     * will only affect invoices created for that particular subscription.
+     */
+    public Builder setPromotionCode(EmptyParam promotionCode) {
+      this.promotionCode = promotionCode;
+      return this;
+    }
+
+    /**
      * This field has been renamed to {@code proration_behavior}. {@code prorate=true} can be
      * replaced with {@code proration_behavior=create_prorations} and {@code prorate=false} can be
      * replaced with {@code proration_behavior=none}.
@@ -955,7 +985,10 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
     @SerializedName("price")
     Object price;
 
-    /** Data used to generate a new price object inline. */
+    /**
+     * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+     * inline.
+     */
     @SerializedName("price_data")
     PriceData priceData;
 
@@ -1028,7 +1061,10 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
         return this;
       }
 
-      /** Data used to generate a new price object inline. */
+      /**
+       * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+       * inline.
+       */
       public Builder setPriceData(PriceData priceData) {
         this.priceData = priceData;
         return this;
@@ -1070,7 +1106,8 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
 
       /**
        * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+       * one is required.
        */
       @SerializedName("unit_amount_decimal")
       Object unitAmountDecimal;
@@ -1181,7 +1218,8 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         public Builder setUnitAmountDecimal(BigDecimal unitAmountDecimal) {
           this.unitAmountDecimal = unitAmountDecimal;
@@ -1190,7 +1228,8 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         public Builder setUnitAmountDecimal(EmptyParam unitAmountDecimal) {
           this.unitAmountDecimal = unitAmountDecimal;
@@ -1342,7 +1381,10 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
     @SerializedName("price")
     Object price;
 
-    /** Data used to generate a new price object inline. */
+    /**
+     * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+     * inline.
+     */
     @SerializedName("price_data")
     PriceData priceData;
 
@@ -1575,7 +1617,10 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
         return this;
       }
 
-      /** Data used to generate a new price object inline. */
+      /**
+       * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+       * inline.
+       */
       public Builder setPriceData(PriceData priceData) {
         this.priceData = priceData;
         return this;
@@ -1743,7 +1788,8 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
 
       /**
        * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+       * one is required.
        */
       @SerializedName("unit_amount_decimal")
       Object unitAmountDecimal;
@@ -1865,7 +1911,8 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         public Builder setUnitAmountDecimal(BigDecimal unitAmountDecimal) {
           this.unitAmountDecimal = unitAmountDecimal;
@@ -1874,7 +1921,8 @@ public class SubscriptionUpdateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         public Builder setUnitAmountDecimal(EmptyParam unitAmountDecimal) {
           this.unitAmountDecimal = unitAmountDecimal;

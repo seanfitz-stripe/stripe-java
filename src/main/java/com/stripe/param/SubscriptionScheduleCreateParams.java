@@ -933,9 +933,9 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
     List<Plan> plans;
 
     /**
-     * Controls whether or not a subscription schedule will create prorations when transitioning to
-     * this phase. Possible values are {@code create_prorations} or {@code none}, and the default
-     * value is {@code create_prorations}. See <a
+     * If a subscription schedule will create prorations when transitioning to this phase. Possible
+     * values are {@code create_prorations} or {@code none}, and the default value is {@code
+     * create_prorations}. See <a
      * href="https://stripe.com/docs/billing/subscriptions/prorations">Prorations</a>.
      */
     @SerializedName("proration_behavior")
@@ -1307,9 +1307,9 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
       }
 
       /**
-       * Controls whether or not a subscription schedule will create prorations when transitioning
-       * to this phase. Possible values are {@code create_prorations} or {@code none}, and the
-       * default value is {@code create_prorations}. See <a
+       * If a subscription schedule will create prorations when transitioning to this phase.
+       * Possible values are {@code create_prorations} or {@code none}, and the default value is
+       * {@code create_prorations}. See <a
        * href="https://stripe.com/docs/billing/subscriptions/prorations">Prorations</a>.
        */
       public Builder setProrationBehavior(ProrationBehavior prorationBehavior) {
@@ -1375,7 +1375,10 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
       @SerializedName("price")
       String price;
 
-      /** Data used to generate a new price object inline. */
+      /**
+       * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+       * inline.
+       */
       @SerializedName("price_data")
       PriceData priceData;
 
@@ -1443,7 +1446,10 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
           return this;
         }
 
-        /** Data used to generate a new price object inline. */
+        /**
+         * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+         * inline.
+         */
         public Builder setPriceData(PriceData priceData) {
           this.priceData = priceData;
           return this;
@@ -1486,7 +1492,8 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         @SerializedName("unit_amount_decimal")
         BigDecimal unitAmountDecimal;
@@ -1583,7 +1590,8 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
 
           /**
            * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal
-           * places. Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+           * places. Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but
+           * at least one is required.
            */
           public Builder setUnitAmountDecimal(BigDecimal unitAmountDecimal) {
             this.unitAmountDecimal = unitAmountDecimal;
@@ -1793,7 +1801,10 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
       @SerializedName("price")
       String price;
 
-      /** Data used to generate a new price object inline. */
+      /**
+       * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+       * inline.
+       */
       @SerializedName("price_data")
       PriceData priceData;
 
@@ -1925,7 +1936,10 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
           return this;
         }
 
-        /** Data used to generate a new price object inline. */
+        /**
+         * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+         * inline.
+         */
         public Builder setPriceData(PriceData priceData) {
           this.priceData = priceData;
           return this;
@@ -2100,7 +2114,8 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         @SerializedName("unit_amount_decimal")
         BigDecimal unitAmountDecimal;
@@ -2208,7 +2223,8 @@ public class SubscriptionScheduleCreateParams extends ApiRequestParams {
 
           /**
            * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal
-           * places. Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+           * places. Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but
+           * at least one is required.
            */
           public Builder setUnitAmountDecimal(BigDecimal unitAmountDecimal) {
             this.unitAmountDecimal = unitAmountDecimal;

@@ -11,6 +11,10 @@ import lombok.Getter;
 
 @Getter
 public class SessionCreateParams extends ApiRequestParams {
+  /** Enables user redeemable promotion codes. */
+  @SerializedName("allow_promotion_codes")
+  Boolean allowPromotionCodes;
+
   /** Specify whether Checkout should collect the customer's billing address. */
   @SerializedName("billing_address_collection")
   BillingAddressCollection billingAddressCollection;
@@ -63,7 +67,7 @@ public class SessionCreateParams extends ApiRequestParams {
 
   /**
    * A list of items the customer is purchasing. Use this parameter to pass one-time or recurring <a
-   * href="https://stripe.com/docs/api/prices">prices</a>. One-time prices in {@code subscription}
+   * href="https://stripe.com/docs/api/prices">Prices</a>. One-time Prices in {@code subscription}
    * mode will be on the initial invoice only.
    *
    * <p>There is a maximum of 100 line items, however it is recommended to consolidate line items if
@@ -155,6 +159,7 @@ public class SessionCreateParams extends ApiRequestParams {
   String successUrl;
 
   private SessionCreateParams(
+      Boolean allowPromotionCodes,
       BillingAddressCollection billingAddressCollection,
       String cancelUrl,
       String clientReferenceId,
@@ -173,6 +178,7 @@ public class SessionCreateParams extends ApiRequestParams {
       SubmitType submitType,
       SubscriptionData subscriptionData,
       String successUrl) {
+    this.allowPromotionCodes = allowPromotionCodes;
     this.billingAddressCollection = billingAddressCollection;
     this.cancelUrl = cancelUrl;
     this.clientReferenceId = clientReferenceId;
@@ -198,6 +204,8 @@ public class SessionCreateParams extends ApiRequestParams {
   }
 
   public static class Builder {
+    private Boolean allowPromotionCodes;
+
     private BillingAddressCollection billingAddressCollection;
 
     private String cancelUrl;
@@ -237,6 +245,7 @@ public class SessionCreateParams extends ApiRequestParams {
     /** Finalize and obtain parameter instance from this builder. */
     public SessionCreateParams build() {
       return new SessionCreateParams(
+          this.allowPromotionCodes,
           this.billingAddressCollection,
           this.cancelUrl,
           this.clientReferenceId,
@@ -255,6 +264,12 @@ public class SessionCreateParams extends ApiRequestParams {
           this.submitType,
           this.subscriptionData,
           this.successUrl);
+    }
+
+    /** Enables user redeemable promotion codes. */
+    public Builder setAllowPromotionCodes(Boolean allowPromotionCodes) {
+      this.allowPromotionCodes = allowPromotionCodes;
+      return this;
     }
 
     /** Specify whether Checkout should collect the customer's billing address. */
@@ -564,15 +579,16 @@ public class SessionCreateParams extends ApiRequestParams {
     String name;
 
     /**
-     * The ID of the price or plan object. One of {@code price}, {@code price_data} or {@code
-     * amount} is required.
+     * The ID of the <a href="https://stripe.com/docs/api/prices">Price</a> or <a
+     * href="https://stripe.com/docs/api/plans">Plan</a> object. One of {@code price}, {@code
+     * price_data} or {@code amount} is required.
      */
     @SerializedName("price")
     String price;
 
     /**
-     * Data used to generate a new price object inline. One of {@code price}, {@code price_data} or
-     * {@code amount} is required.
+     * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+     * inline. One of {@code price}, {@code price_data} or {@code amount} is required.
      */
     @SerializedName("price_data")
     PriceData priceData;
@@ -743,8 +759,9 @@ public class SessionCreateParams extends ApiRequestParams {
       }
 
       /**
-       * The ID of the price or plan object. One of {@code price}, {@code price_data} or {@code
-       * amount} is required.
+       * The ID of the <a href="https://stripe.com/docs/api/prices">Price</a> or <a
+       * href="https://stripe.com/docs/api/plans">Plan</a> object. One of {@code price}, {@code
+       * price_data} or {@code amount} is required.
        */
       public Builder setPrice(String price) {
         this.price = price;
@@ -752,8 +769,8 @@ public class SessionCreateParams extends ApiRequestParams {
       }
 
       /**
-       * Data used to generate a new price object inline. One of {@code price}, {@code price_data}
-       * or {@code amount} is required.
+       * Data used to generate a new <a href="https://stripe.com/docs/api/prices">Price</a> object
+       * inline. One of {@code price}, {@code price_data} or {@code amount} is required.
        */
       public Builder setPriceData(PriceData priceData) {
         this.priceData = priceData;
@@ -830,13 +847,17 @@ public class SessionCreateParams extends ApiRequestParams {
       @SerializedName("recurring")
       Recurring recurring;
 
-      /** A positive integer in %s representing how much to charge. */
+      /**
+       * A positive integer in %s representing how much to charge. One of {@code unit_amount} or
+       * {@code unit_amount_decimal} is required.
+       */
       @SerializedName("unit_amount")
       Long unitAmount;
 
       /**
        * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+       * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+       * one is required.
        */
       @SerializedName("unit_amount_decimal")
       BigDecimal unitAmountDecimal;
@@ -951,7 +972,10 @@ public class SessionCreateParams extends ApiRequestParams {
           return this;
         }
 
-        /** A positive integer in %s representing how much to charge. */
+        /**
+         * A positive integer in %s representing how much to charge. One of {@code unit_amount} or
+         * {@code unit_amount_decimal} is required.
+         */
         public Builder setUnitAmount(Long unitAmount) {
           this.unitAmount = unitAmount;
           return this;
@@ -959,7 +983,8 @@ public class SessionCreateParams extends ApiRequestParams {
 
         /**
          * Same as {@code unit_amount}, but accepts a decimal value with at most 12 decimal places.
-         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set.
+         * Only one of {@code unit_amount} and {@code unit_amount_decimal} can be set, but at least
+         * one is required.
          */
         public Builder setUnitAmountDecimal(BigDecimal unitAmountDecimal) {
           this.unitAmountDecimal = unitAmountDecimal;
@@ -2989,7 +3014,7 @@ public class SessionCreateParams extends ApiRequestParams {
     BigDecimal applicationFeePercent;
 
     /**
-     * The code of the coupon to apply to this subscription. A coupon applied to a subscription will
+     * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will
      * only affect invoices created for that particular subscription.
      */
     @SerializedName("coupon")
@@ -3122,8 +3147,8 @@ public class SessionCreateParams extends ApiRequestParams {
       }
 
       /**
-       * The code of the coupon to apply to this subscription. A coupon applied to a subscription
-       * will only affect invoices created for that particular subscription.
+       * The ID of the coupon to apply to this subscription. A coupon applied to a subscription will
+       * only affect invoices created for that particular subscription.
        */
       public Builder setCoupon(String coupon) {
         this.coupon = coupon;
@@ -3500,7 +3525,13 @@ public class SessionCreateParams extends ApiRequestParams {
     TR("tr"),
 
     @SerializedName("zh")
-    ZH("zh");
+    ZH("zh"),
+
+    @SerializedName("zh-HK")
+    ZH_HK("zh-HK"),
+
+    @SerializedName("zh-TW")
+    ZH_TW("zh-TW");
 
     @Getter(onMethod_ = {@Override})
     private final String value;
